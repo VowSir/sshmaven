@@ -9,6 +9,10 @@
 							http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
 							http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd ">
 
+    <!-- dao层引入注解的驱动 -->
+    <context:component-scan base-package="io.man"/>
+
+
     <!-- 引入db.properties文件 -->
     <context:property-placeholder location="classpath:db.properties"/>
 
@@ -35,10 +39,11 @@
                 <prop key="hibernate.format_sql">true</prop>
             </props>
         </property>
+
         <!-- 映射文件 -->
-        <property name="mappingLocations">
+        <property name="packagesToScan">
             <list>
-                <value>classpath:io/man/mavenweb/entity/*.hbm.xml</value>
+                <value>io.man.mavenweb.entity</value>
             </list>
         </property>
 
@@ -51,37 +56,7 @@
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
-    <!-- 配置事务的通知 -->
-    <tx:advice id="advice" transaction-manager="transactionManager">
-        <tx:attributes>
-            <tx:method name="do*" propagation="REQUIRED"/>
-            <tx:method name="add*" propagation="REQUIRED"/>
-            <tx:method name="update*" propagation="REQUIRED"/>
-            <tx:method name="save*" propagation="REQUIRED"/>
-            <tx:method name="delete*" propagation="REQUIRED"/>
-            <tx:method name="*" read-only="true"/>
-        </tx:attributes>
-    </tx:advice>
-
-    <!-- 配置事务的切面 -->
-    <aop:config>
-        <aop:pointcut id="serviceMethod" expression="execution(* io.man.mavenweb.service..*(..))"/>
-        <aop:advisor advice-ref="advice" pointcut-ref="serviceMethod"/>
-    </aop:config>
-
-    <!-- 引入部门的配置 -->
-    <!-- 部门的数据访问类 -->
-    <bean name="depDao" class="io.man.mavenweb.dao.impl.DepDaoImpl">
-        <property name="sessionFactory" ref="sessionFactory"/>
-    </bean>
-    <!-- 部门的业务处理层 -->
-    <bean name="depService" class="io.man.mavenweb.service.Impl.DepServiceImpl">
-        <property name="depDao" ref="depDao"/>
-    </bean>
-    <!-- 部门的action -->
-    <bean name="depAction" class="io.man.mavenweb.web.action.DepAction">
-        <property name="depService" ref="depService"/>
-
-    </bean>
+    <!-- 事务驱动注解 -->
+    <tx:annotation-driven transaction-manager="transactionManager"/>
 
 </beans>

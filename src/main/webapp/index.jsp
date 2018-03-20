@@ -10,12 +10,13 @@
     <title>maventest</title>
 </head>
 <body>
-hello  maven!
+
 <c:forEach var="i" items="${list}">
     ${i.uuid}
     ${i.name}
     ${i.tele}<br>
-hello maven
+
 </c:forEach>
+hello maven
 </body>
 </html>
