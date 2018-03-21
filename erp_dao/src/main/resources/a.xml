@@ -9,6 +9,10 @@
 							http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
 							http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd ">
 
+    <!-- dao层引入注解的驱动 -->
+    <context:component-scan base-package="io.man"/>
+
+
     <!-- 引入db.properties文件 -->
     <context:property-placeholder location="classpath:db.properties"/>
 
@@ -39,9 +43,20 @@
         <!-- 映射文件 -->
         <property name="packagesToScan">
             <list>
-                <value>io.man.mavenweb.entity</value>
+                <value>io.man.entity</value>
             </list>
         </property>
+
     </bean>
+
+    <!-- 事务的配置 -->
+
+    <!-- 定义事务管理器 -->
+    <bean name="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <!-- 事务驱动注解 -->
+    <tx:annotation-driven transaction-manager="transactionManager"/>
 
 </beans>
