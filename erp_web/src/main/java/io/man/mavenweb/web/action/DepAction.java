@@ -7,6 +7,7 @@ import lombok.Setter;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
+import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -18,6 +19,7 @@ import java.util.List;
 @Controller
 @Namespace("/")
 @Scope("prototype")
+@ParentPackage("struts-default")
 public class DepAction extends ActionSupport{
 
     @Autowired
