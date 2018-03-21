@@ -1,9 +1,10 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>cn.itcast.mavendemo</groupId>
+    <groupId>io.man.mavenweb</groupId>
     <artifactId>mavenweb</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>war</packaging>
+
+    <packaging>pom</packaging>
 
 
     <properties>
@@ -40,6 +41,7 @@
     </build>
 
     <dependencies>
+
         <!-- servletapi 依赖-->
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -131,6 +133,16 @@
             <groupId>org.apache.struts</groupId>
             <artifactId>struts2-spring-plugin</artifactId>
             <version>${struts.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>spring-beans</artifactId>
+                    <groupId>org.springframework</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>spring-context</artifactId>
+                    <groupId>org.springframework</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <!-- mysql 依赖 -->
         <dependency>
@@ -159,4 +171,11 @@
         </dependency>
 
     </dependencies>
+
+    <modules>
+        <module>erp_entity</module>
+        <module>erp_dao</module>
+        <module>erp_service</module>
+        <module>erp_web</module>
+    </modules>
 </project>
